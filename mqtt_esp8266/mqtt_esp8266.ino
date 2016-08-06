@@ -22,7 +22,7 @@
 /************************* WiFi Access Point *********************************/
 
 #define WLAN_SSID       "JPHomeCJ_WiFiGuest"
-#define WLAN_PASS       ":-)"
+#define WLAN_PASS       "kilimanjaro"
 
 /************************* Adafruit.io Setup *********************************/
 
@@ -35,7 +35,7 @@
 
 // Create an ESP8266 WiFiClient class to connect to the MQTT server.
 WiFiClient client;
-// or... use WiFiFlientSecure for SSL
+// or... use WiFiClientSecure for SSL
 //WiFiClientSecure client;
 
 // Store the MQTT server, username, and password in flash memory. This is required for using the Adafruit MQTT library.
