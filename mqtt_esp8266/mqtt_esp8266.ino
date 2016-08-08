@@ -25,8 +25,8 @@
 
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID       "JPHomeCJ_WiFiGuest"
-#define WLAN_PASS       "kilimanjaro"
+#define WLAN_SSID       "XperiaZ5JP"
+#define WLAN_PASS       ""
 
 /************************* Adafruit.io Setup *********************************/
 
