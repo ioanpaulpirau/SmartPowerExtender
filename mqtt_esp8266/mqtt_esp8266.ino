@@ -18,6 +18,10 @@
 #include <ESP8266WiFi.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
+#include "Utils.h"
+
+/////!!!!!
+//#define MQTT_DEBUG
 
 /************************* WiFi Access Point *********************************/
 
@@ -45,6 +49,8 @@ const char MQTT_PASSWORD[] PROGMEM  = DEVICE_KEY;
 
 // Setup the MQTT client class by passing in the WiFi client and MQTT server and login details.
 Adafruit_MQTT_Client mqtt(&client, MQTT_SERVER, SERVER_PORT, MQTT_USERNAME, MQTT_PASSWORD);
+
+CSocketControl socks;
 
 /****************************** Feeds ***************************************/
 
@@ -145,11 +151,15 @@ void setup() {
 
   // Setup MQTT subscription for onoff feed.
   mqtt.subscribe(&subscriber);
+
+  // Setup Relays
+  socks.setupRelays();
 }
 
 uint32_t x=0;
 char text_to_send[100];
 char converter[10];
+char* strBuf = new char[16];
 
 void loop() {
   // Ensure the connection to the MQTT server is alive (this will make the first
@@ -159,18 +169,33 @@ void loop() {
 
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
-  Adafruit_MQTT_Subscribe *subscription;
+//  Adafruit_MQTT_Subscribe
+
+  Serial.print(getTime().c_str());
+  Serial.print(F(" - Checking subscription :"));
+  Adafruit_MQTT_Subscribe *subscription = mqtt.readSubscription(5000);
+
   while ((subscription = mqtt.readSubscription(5000))) {
     if (subscription == &subscriber) {
       Serial.print(F("Got: "));
       Serial.println((char *)subscriber.lastread);
+      socks.setSocket((char *)subscriber.lastread);
+    }
+    else{
+      Serial.print(F("Got something else: "));
+      Serial.println((char *)subscriber.lastread);      
     }
   }
+  Serial.print(getTime().c_str());
+  Serial.print(F(" - Check over !"));
+
+  socks.readAmperage();
 
   strcpy(text_to_send, getTime().c_str());
   strcat(text_to_send, " - NodeMCU says hello for the ");
   strcat(text_to_send, itoa(x++, converter, 10));
-  strcat(text_to_send, "'th time :)");
+  strcat(text_to_send, "'th time - Extender config is: ");
+  strcat(text_to_send, socks.getState().toString(strBuf));
 
   // Now we can publish stuff!
   Serial.print(F("\nSending :"));

@@ -440,6 +440,7 @@ Adafruit_MQTT_Subscribe *Adafruit_MQTT::readSubscription(int16_t timeout) {
     if (subscriptions[i]) {
       // Skip this subscription if its name length isn't the same as the
       // received topic name.
+      DEBUG_PRINT(F("Checking sub #")); DEBUG_PRINTLN(i);
       if (strlen_P(subscriptions[i]->topic) != topiclen)
         continue;
       // Stop if the subscription topic matches the received topic. Be careful
