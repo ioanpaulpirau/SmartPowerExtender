@@ -54,7 +54,7 @@ Include the HTML, STYLE and Script "Pages"
 #include "webesp/example.h"
 
 
-#define ACCESS_POINT_NAME  "ESP"				
+#define ACCESS_POINT_NAME  "ESP2"				
 #define ACCESS_POINT_PASSWORD  "12345678" 
 #define AdminTimeOut 180  // Defines the Time in Seconds, when the Admin-Mode will be diabled
 

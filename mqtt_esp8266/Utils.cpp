@@ -74,11 +74,11 @@ void CSocketControl::setSocket(char* inputString)
   if (len < 2 || len > 10) return;
   // interpret commands
   if (!strcmp(inputString, "alloff"))
-    for (int i = 1; i < 4; i++)
+    for (int i = 1; i <= 4; i++)
       setSocket(i, 1);
     else
       if (!strcmp(inputString, "allon"))
-        for (int i = 1; i < 4; i++)
+        for (int i = 1; i <= 4; i++)
           setSocket(i, 0);
       else
         if (!strcmp(inputString, "looptest"))
